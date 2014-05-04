@@ -7,14 +7,16 @@
 //
 
 #import "MLKAppDelegate.h"
-
+#import "MLKTableViewController.h"
 @implementation MLKAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
-    self.window.backgroundColor = [UIColor whiteColor];
+    MLKTableViewController *viewController = [[MLKTableViewController alloc] initWithStyle:UITableViewStylePlain];
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
+    self.window.rootViewController = navController;
+    self.window.backgroundColor = [UIColor whiteColor]; //optional
     [self.window makeKeyAndVisible];
     return YES;
 }
