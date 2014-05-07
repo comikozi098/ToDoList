@@ -20,6 +20,7 @@
 		ABAA96A41916C18300757238 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = ABAA96A21916C18300757238 /* InfoPlist.strings */; };
 		ABAA96A61916C18300757238 /* ToDoListTests.m in Sources */ = {isa = PBXBuildFile; fileRef = ABAA96A51916C18300757238 /* ToDoListTests.m */; };
 		ABAA96B41916C22800757238 /* MLKTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABAA96B31916C22800757238 /* MLKTableViewController.m */; };
+		ABD46E8A191AE7520074F2CA /* MLKCreateTodoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD46E89191AE7520074F2CA /* MLKCreateTodoViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,8 @@
 		ABAA96A51916C18300757238 /* ToDoListTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ToDoListTests.m; sourceTree = "<group>"; };
 		ABAA96B21916C22800757238 /* MLKTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLKTableViewController.h; sourceTree = "<group>"; };
 		ABAA96B31916C22800757238 /* MLKTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLKTableViewController.m; sourceTree = "<group>"; };
+		ABD46E88191AE7520074F2CA /* MLKCreateTodoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLKCreateTodoViewController.h; sourceTree = "<group>"; };
+		ABD46E89191AE7520074F2CA /* MLKCreateTodoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLKCreateTodoViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +85,8 @@
 			children = (
 				ABAA96B21916C22800757238 /* MLKTableViewController.h */,
 				ABAA96B31916C22800757238 /* MLKTableViewController.m */,
+				ABD46E88191AE7520074F2CA /* MLKCreateTodoViewController.h */,
+				ABD46E89191AE7520074F2CA /* MLKCreateTodoViewController.m */,
 				ABAA96861916C18200757238 /* ToDoList */,
 				ABAA969F1916C18300757238 /* ToDoListTests */,
 				ABAA967F1916C18200757238 /* Frameworks */,
@@ -246,6 +251,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ABAA968D1916C18200757238 /* main.m in Sources */,
+				ABD46E8A191AE7520074F2CA /* MLKCreateTodoViewController.m in Sources */,
 				ABAA96911916C18200757238 /* MLKAppDelegate.m in Sources */,
 				ABAA96B41916C22800757238 /* MLKTableViewController.m in Sources */,
 			);
@@ -444,6 +450,7 @@
 				ABAA96AB1916C18300757238 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		ABAA96AC1916C18300757238 /* Build configuration list for PBXNativeTarget "ToDoListTests" */ = {
 			isa = XCConfigurationList;
@@ -452,6 +459,7 @@
 				ABAA96AE1916C18300757238 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface MLKTableViewController : UITableViewController <UIAlertViewDelegate>
+#import "MLKCreateTodoViewController.h"
+@interface MLKTableViewController : UITableViewController <UIAlertViewDelegate, MLKCreateTodoViewControllerDelegate>
 
 
 

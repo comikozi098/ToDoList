@@ -8,38 +8,65 @@
 
 #import "MLKTableViewController.h"
 
+
 @interface MLKTableViewController ()
 @property (strong, nonatomic) NSMutableArray *todos;
 @end
 
 @implementation MLKTableViewController
 
+
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
     if (self) {
         self.navigationItem.title = @"To-Do List";
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(didTapAddButton)];
-        self.todos = [[NSMutableArray alloc] init];
-        [self.tableView reloadData];
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]
+                                                  initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
+                                                  target:self
+                                                  action:@selector(didTapAddButton)];
+        self.todos = [NSUserDefaults.standardUserDefaults objectForKey:@"todos"];
+        if (!self.todos) {
+            self.todos = [[NSMutableArray alloc] init];
+        }
+        [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
     }
     return self;
 }
 
 - (void)didTapAddButton {
-
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"New To-Do" message:@"Enter a to-do item" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Done", nil];
-    alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
-    [alertView show];
+    
+    MLKCreateTodoViewController *createVC = [[MLKCreateTodoViewController alloc] init];
+    createVC.delegate = self;
+    [self.navigationController presentViewController:createVC animated:YES completion:nil];
     
 }
-- (void)alertView:(UIAlertView *)alertView
-clickedButtonAtIndex:(NSInteger)buttonIndex {
-	if (buttonIndex == [alertView firstOtherButtonIndex]) {
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+       //add word and have it be displayed
+    if (buttonIndex == [alertView firstOtherButtonIndex]) {
         NSString *input = [[alertView textFieldAtIndex:0] text];
-		[self.todos addObject:input];
+        [self.todos addObject:input];
+        
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        [userDefaults setObject:self.todos forKey:@"todos"];
+        [userDefaults synchronize];
+        
+        [self.tableView reloadData];
     }
 }
+
+- (void)createTodo:(NSString *)todo withDueDate:(NSDate *)dueDate {
+    
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)didCancelCreatingNewTodo {
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    
+}
+
+
 
 - (void)viewDidLoad
 {
@@ -91,18 +118,22 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
 }
 */
 
-/*
-// Override to support editing the table view.
+
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    //delete objects from view
+   
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
+        [self.todos removeObjectAtIndex:indexPath.row];
+        
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        [userDefaults setObject:self.todos forKey:@"todos"];
+        [userDefaults synchronize];
+        
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+    }
 }
-*/
+
 
 /*
 // Override to support rearranging the table view.
