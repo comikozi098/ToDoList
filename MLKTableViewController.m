@@ -37,9 +37,9 @@
 - (void)didTapAddButton {
     
     MLKCreateTodoViewController *createVC = [[MLKCreateTodoViewController alloc] init];
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:createVC];
     createVC.delegate = self;
-    [self.navigationController presentViewController:createVC animated:YES completion:nil];
-    
+    [self.navigationController presentViewController:navController animated:YES completion:nil];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
