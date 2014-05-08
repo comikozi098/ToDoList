@@ -31,6 +31,13 @@
     [self renderDueDate];
 }
 
+-(void)didTapDoneButton {
+    
+}
+-(void)didTapCancelButton{
+    
+}
+
 - (void)renderTodoText {
     
     UILabel *todoLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 80, 0, 0)];
@@ -81,9 +88,16 @@
     
 }
 
--(void)didChangeDate {
+-(void)didChangeDate:(UIDatePicker *)picker {
     
+    self.dueDate = [picker date];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+    dateFormatter.dateStyle = NSDateFormatterMediumStyle;
+    
+    self.dueDateInput.text = [dateFormatter stringFromDate:self.dueDate];
+    NSLog(@"date is %@",self.dueDate);
 }
+
 
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {

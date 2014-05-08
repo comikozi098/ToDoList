@@ -42,20 +42,6 @@
     [self.navigationController presentViewController:navController animated:YES completion:nil];
 }
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-       //add word and have it be displayed
-    if (buttonIndex == [alertView firstOtherButtonIndex]) {
-        NSString *input = [[alertView textFieldAtIndex:0] text];
-        [self.todos addObject:input];
-        
-        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-        [userDefaults setObject:self.todos forKey:@"todos"];
-        [userDefaults synchronize];
-        
-        [self.tableView reloadData];
-    }
-}
-
 - (void)createTodo:(NSString *)todo withDueDate:(NSDate *)dueDate {
     
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
@@ -66,6 +52,9 @@
     
 }
 
+-(void)sayHello; {
+    NSLog(@"Hello");
+}
 
 
 - (void)viewDidLoad
