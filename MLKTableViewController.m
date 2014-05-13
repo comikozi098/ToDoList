@@ -16,6 +16,7 @@
 @implementation MLKTableViewController
 
 
+
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
@@ -43,7 +44,13 @@
 }
 
 - (void)createTodo:(NSString *)todo withDueDate:(NSDate *)dueDate {
+    NSDictionary *item = @{@"text": todo,
+                           @"dueDate": dueDate};
+    [self.todos addObject:item];
+    [[NSUserDefaults standardUserDefaults] setObject:self.todos forKey:@"todos"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
     
+    [self.tableView reloadData];
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -85,19 +92,23 @@
     return self.todos.count;
 }
 
- - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
- {
- static NSString *CellIdentifier = @"Cell";
- UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
- if (!cell) {
- cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
- }
- 
- cell.textLabel.text = self.todos[indexPath.row];
- 
- return cell;
- }
-
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *CellIdentifier = @"Cell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"Cell"];
+    }
+    
+    NSDictionary *todo = self.todos[indexPath.row];
+    cell.textLabel.text = todo[@"text"];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.dateStyle = NSDateFormatterMediumStyle;
+    
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"Due %@",
+                                 [dateFormatter stringFromDate:todo[@"dueDate"]]];
+    return cell;
+}
 /*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath

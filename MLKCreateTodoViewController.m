@@ -31,13 +31,13 @@
     [self renderDueDate];
 }
 
--(void)didTapDoneButton {
-    
-}
--(void)didTapCancelButton{
-    
+- (void)didTapDoneButton {
+    [self.delegate createTodo:self.todoInput.text withDueDate:self.dueDate];
 }
 
+- (void)didTapCancelButton {
+    [self.delegate didCancelCreatingNewTodo];
+}
 - (void)renderTodoText {
     
     UILabel *todoLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 80, 0, 0)];
