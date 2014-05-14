@@ -11,10 +11,10 @@
 @class Todo;
 
 @protocol MLKCreateTodoViewControllerDelegate
-//methods
 - (void)createTodo:(NSString *)todo withDueDate:(NSDate *)dueDate;
+- (void)updateTodo:(NSString *)toto withDueDate:(NSDate *)dueDate atRow:(NSUInteger)row;
 - (void)didCancelCreatingNewTodo;
-
+- (void) shareTodo:(NSString *)todo withDueDate: (NSDate *) dueDate  atRow: (NSInteger) row;
 @end
 
 

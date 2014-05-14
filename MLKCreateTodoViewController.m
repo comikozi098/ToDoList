@@ -27,15 +27,26 @@
     
     self.navigationItem.title = @"New To-Do";
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(didTapDoneButton)];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonSystemItemCancel target:self action:@selector(didTapCancelButton)];
-    
+    if (!self.todo) {
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStyleDone target:self action:@selector(didTapCancelButton)];
+    }
+    [self shareTodo];
     [self renderTodoText];
     
     [self renderDueDate];
 }
-
+-(void)shareTodo {
+    UIButton *share = [[UIButton alloc] initWithFrame:CGRectMake(30, 100, 50, 20)];
+    [share setTitle:@"Share" forState:UIControlStateNormal];
+    [share sizeToFit];
+    [self.view addSubview:share];
+}
 - (void)didTapDoneButton {
-    [self.delegate createTodo:self.todoInput.text withDueDate:self.dueDate];
+    if (self.todo) {
+        [self.delegate updateTodo:self.todoInput.text withDueDate:self.dueDate atRow:self.row];
+    } else {
+        [self.delegate createTodo:self.todoInput.text withDueDate:self.dueDate];
+    }
 }
 
 - (void)didTapCancelButton {
@@ -50,6 +61,9 @@
     [self.view addSubview:todoLabel];
     
     self.todoInput = [[UITextField alloc] init];
+    if (self.todo) {
+        self.todoInput.text = self.todo.text;
+    }
     self.todoInput.borderStyle = UITextBorderStyleRoundedRect;
     self.todoInput.placeholder = @"Enter a to-do here.";
     self.todoInput.clearButtonMode = UITextFieldViewModeUnlessEditing;
@@ -58,7 +72,9 @@
                                       CGRectGetMaxY(todoLabel.frame) + 5,
                                       CGRectGetWidth(self.view.frame) - (40),
                                       40);
-    [self.view addSubview:self.todoInput];   }
+    [self.view addSubview:self.todoInput];
+
+}
 
 - (void)renderDueDate {
    
@@ -85,7 +101,13 @@
     self.dueDateInput.inputView = datePicker;
     
     [self.view addSubview:self.dueDateInput];
-    
+    if (self.todo) {
+        NSDateFormatter  *dateFormatter = [[NSDateFormatter alloc]init];
+        dateFormatter.dateStyle = NSDateFormatterMediumStyle;
+        self.dueDate = self.todo.dueDate;
+        self.dueDateInput.text = [dateFormatter stringFromDate:self.dueDate];
+        datePicker.date = self.dueDate;
+    }
   
 }
 

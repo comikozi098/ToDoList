@@ -16,6 +16,35 @@
 
 @implementation MLKTableViewController
 
+-(void) shareTodo:(NSString *)todo withDueDate: (NSDate *) dueDate  atRow: (NSInteger) row {
+    NSString *message = todo;
+    NSDate *date = dueDate;
+    NSArray *todoMail = @[message,date];
+    UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:todoMail applicationActivities:nil];
+    
+   
+
+}
+- (void)updateTodo:(NSString *)todo withDueDate:(NSDate *)dueDate atRow:(NSUInteger)row {
+    Todo *item = [[Todo alloc] init];
+    item.text = todo;
+    item.dueDate = dueDate;
+    [self.todos replaceObjectAtIndex:row withObject:item];
+    
+    
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"dueDate" ascending:YES];
+    [self.todos sortUsingDescriptors:@[sortDescriptor]];
+    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSData *todoData = [NSKeyedArchiver archivedDataWithRootObject:self.todos];
+    [userDefaults setObject:todoData forKey:@"todos"];
+    [userDefaults synchronize];
+    
+    
+    [self.tableView reloadData];
+    [self.navigationController popViewControllerAnimated:YES];
+   }
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     Todo *todo = self.todos[indexPath.row];
     MLKCreateTodoViewController *createVC = [[MLKCreateTodoViewController alloc] initWithTodo:todo atRow:indexPath.row];
