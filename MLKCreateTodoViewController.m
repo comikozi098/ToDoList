@@ -7,6 +7,7 @@
 //
 
 #import "MLKCreateTodoViewController.h"
+#import "Todo.h"
 
 @interface MLKCreateTodoViewController ()
 @property (strong, nonatomic) UITextField *todoInput;
@@ -15,6 +16,8 @@
 @end
 
 @implementation MLKCreateTodoViewController
+
+
 
 - (void)viewDidLoad
 {
@@ -56,7 +59,10 @@
                                       CGRectGetWidth(self.view.frame) - (40),
                                       40);
     [self.view addSubview:self.todoInput];
-    
+    self.todoInput = [[UITextField alloc] init];
+    if (self.todo) {
+        self.todoInput.text = self.todo.text;
+    }
 }
 
 - (void)renderDueDate {
@@ -86,6 +92,16 @@
     
     [self.view addSubview:self.dueDateInput];
     
+    [self.view addSubview:self.dueDateInput];
+    
+    if (self.todo) {
+        NSDateFormatter  *dateFormatter = [[NSDateFormatter alloc]init];
+        dateFormatter.dateStyle = NSDateFormatterMediumStyle;
+        self.dueDate = self.todo.dueDate;
+        self.dueDateInput.text = [dateFormatter stringFromDate:self.dueDate];
+        datePicker.date = self.dueDate;
+    }
+    
 }
 
 -(void)didChangeDate:(UIDatePicker *)picker {
@@ -103,6 +119,13 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     return YES;
+}
+- (id)initWithTodo:(Todo *)todo atRow:(NSUInteger)row {
+    if (self = [super init]) {
+        self.todo = todo;
+        self.row = row;
+    }
+    return self;
 }
 
 @end

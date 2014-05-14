@@ -7,6 +7,7 @@
 //
 
 #import "MLKTableViewController.h"
+#import "Todo.h" 
 
 
 @interface MLKTableViewController ()
@@ -15,26 +16,26 @@
 
 @implementation MLKTableViewController
 
-
-
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    Todo *todo = self.todos[indexPath.row];
+    MLKCreateTodoViewController *createVC = [[MLKCreateTodoViewController alloc] initWithTodo:todo atRow:indexPath.row];
+    createVC.delegate = self;
+    [self.navigationController pushViewController:createVC animated:YES];
+}
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
     if (self) {
         self.navigationItem.title = @"To-Do List";
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]
-                                                  initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
-                                                  target:self
-                                                  action:@selector(didTapAddButton)];
-        self.todos = [NSUserDefaults.standardUserDefaults objectForKey:@"todos"];
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(didTapAddButton)];
+      self.todos = [NSKeyedUnarchiver unarchiveObjectWithFile:self.resourcePath];
+        
         if (!self.todos) {
             self.todos = [[NSMutableArray alloc] init];
         }
-        [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
     }
     return self;
 }
-
 - (void)didTapAddButton {
     
     MLKCreateTodoViewController *createVC = [[MLKCreateTodoViewController alloc] init];
@@ -42,27 +43,28 @@
     createVC.delegate = self;
     [self.navigationController presentViewController:navController animated:YES completion:nil];
 }
-
+- (void)didCancelCreatingNewTodo; {
+    NSLog(@"you hit cancel ahh!");
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+}
 - (void)createTodo:(NSString *)todo withDueDate:(NSDate *)dueDate {
-    NSDictionary *item = @{@"text": todo,
-                           @"dueDate": dueDate};
+    Todo *item = [[Todo alloc] init];
+    item.text = todo;
+    item.dueDate = dueDate;
     [self.todos addObject:item];
-    [[NSUserDefaults standardUserDefaults] setObject:self.todos forKey:@"todos"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"dueDate" ascending:YES];
+    [self.todos sortUsingDescriptors:@[sortDescriptor]];
+    
+    [NSKeyedArchiver archiveRootObject:self.todos toFile:self.resourcePath];
     
     [self.tableView reloadData];
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)didCancelCreatingNewTodo {
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
-    
+- (NSString *)resourcePath {
+    return [NSBundle.mainBundle.resourcePath  stringByAppendingPathComponent:@"todos"];
 }
-
--(void)sayHello; {
-    NSLog(@"Hello");
-}
-
 
 - (void)viewDidLoad
 {
@@ -100,16 +102,15 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"Cell"];
     }
     
-    NSDictionary *todo = self.todos[indexPath.row];
-    cell.textLabel.text = todo[@"text"];
+    Todo *todo = self.todos[indexPath.row];
+    cell.textLabel.text = todo.text;
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     dateFormatter.dateStyle = NSDateFormatterMediumStyle;
     
     cell.detailTextLabel.text = [NSString stringWithFormat:@"Due %@",
-                                 [dateFormatter stringFromDate:todo[@"dueDate"]]];
+                                 [dateFormatter stringFromDate:todo.dueDate]];
     return cell;
-}
-/*
+}/*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -121,19 +122,14 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //delete objects from view
-   
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         [self.todos removeObjectAtIndex:indexPath.row];
         
-        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-        [userDefaults setObject:self.todos forKey:@"todos"];
-        [userDefaults synchronize];
+        [NSKeyedArchiver archiveRootObject:self.todos toFile:self.resourcePath];
         
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
 }
-
 
 /*
 // Override to support rearranging the table view.

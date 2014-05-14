@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AB605F6B1922E50200BA775A /* Todo.m in Sources */ = {isa = PBXBuildFile; fileRef = AB605F6A1922E50200BA775A /* Todo.m */; };
 		ABAA96811916C18200757238 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABAA96801916C18200757238 /* Foundation.framework */; };
 		ABAA96831916C18200757238 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABAA96821916C18200757238 /* CoreGraphics.framework */; };
 		ABAA96851916C18200757238 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABAA96841916C18200757238 /* UIKit.framework */; };
@@ -34,6 +35,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AB605F691922E50200BA775A /* Todo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Todo.h; sourceTree = "<group>"; };
+		AB605F6A1922E50200BA775A /* Todo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Todo.m; sourceTree = "<group>"; };
 		ABAA967D1916C18200757238 /* ToDoList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDoList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABAA96801916C18200757238 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		ABAA96821916C18200757238 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -87,6 +90,8 @@
 				ABAA96B31916C22800757238 /* MLKTableViewController.m */,
 				ABD46E88191AE7520074F2CA /* MLKCreateTodoViewController.h */,
 				ABD46E89191AE7520074F2CA /* MLKCreateTodoViewController.m */,
+				AB605F691922E50200BA775A /* Todo.h */,
+				AB605F6A1922E50200BA775A /* Todo.m */,
 				ABAA96861916C18200757238 /* ToDoList */,
 				ABAA969F1916C18300757238 /* ToDoListTests */,
 				ABAA967F1916C18200757238 /* Frameworks */,
@@ -250,6 +255,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB605F6B1922E50200BA775A /* Todo.m in Sources */,
 				ABAA968D1916C18200757238 /* main.m in Sources */,
 				ABD46E8A191AE7520074F2CA /* MLKCreateTodoViewController.m in Sources */,
 				ABAA96911916C18200757238 /* MLKAppDelegate.m in Sources */,

@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+
+@class Todo;
+
 @protocol MLKCreateTodoViewControllerDelegate
 //methods
--(void)sayHello;
 - (void)createTodo:(NSString *)todo withDueDate:(NSDate *)dueDate;
 - (void)didCancelCreatingNewTodo;
 
@@ -29,6 +31,8 @@
 @interface MLKCreateTodoViewController : UIViewController<UITextFieldDelegate>
 
 @property (weak, nonatomic) id<MLKCreateTodoViewControllerDelegate>delegate;
-
+@property (strong, nonatomic) Todo *todo;
+@property (assign, nonatomic) NSUInteger row;
+- (instancetype)initWithTodo:(Todo *)todo atRow:(NSUInteger)row;
 @end
 
