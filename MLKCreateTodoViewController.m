@@ -58,12 +58,7 @@
                                       CGRectGetMaxY(todoLabel.frame) + 5,
                                       CGRectGetWidth(self.view.frame) - (40),
                                       40);
-    [self.view addSubview:self.todoInput];
-    self.todoInput = [[UITextField alloc] init];
-    if (self.todo) {
-        self.todoInput.text = self.todo.text;
-    }
-}
+    [self.view addSubview:self.todoInput];   }
 
 - (void)renderDueDate {
    
@@ -80,7 +75,6 @@
     self.dueDateInput.clearButtonMode = UITextFieldViewModeUnlessEditing;
     self.dueDateInput.delegate = self;
     
-    
     CGRect dueDateFrame = self.todoInput.frame;
     dueDateFrame.origin.y = CGRectGetMaxY(dueDateLabel.frame) + 5;
     self.dueDateInput.frame = dueDateFrame;
@@ -92,16 +86,7 @@
     
     [self.view addSubview:self.dueDateInput];
     
-    [self.view addSubview:self.dueDateInput];
-    
-    if (self.todo) {
-        NSDateFormatter  *dateFormatter = [[NSDateFormatter alloc]init];
-        dateFormatter.dateStyle = NSDateFormatterMediumStyle;
-        self.dueDate = self.todo.dueDate;
-        self.dueDateInput.text = [dateFormatter stringFromDate:self.dueDate];
-        datePicker.date = self.dueDate;
-    }
-    
+  
 }
 
 -(void)didChangeDate:(UIDatePicker *)picker {
