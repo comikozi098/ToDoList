@@ -30,16 +30,24 @@
     if (!self.todo) {
         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStyleDone target:self action:@selector(didTapCancelButton)];
     }
-    [self shareTodo];
+    [self createShareButton];
     [self renderTodoText];
     
     [self renderDueDate];
 }
--(void)shareTodo {
+-(void)createShareButton {
     UIButton *share = [[UIButton alloc] initWithFrame:CGRectMake(30, 100, 50, 20)];
     [share setTitle:@"Share" forState:UIControlStateNormal];
     [share sizeToFit];
     [self.view addSubview:share];
+    [share addTarget:self
+               action:@selector(didTapShareButton)
+     forControlEvents:UIControlEventTouchUpInside];
+    
+}
+-(void)didTapShareButton {
+    [self.delegate shareTodo:self.todoInput.text withDueDate:self.dueDate atRow:self.row];
+    
 }
 - (void)didTapDoneButton {
     if (self.todo) {
@@ -106,7 +114,10 @@
         dateFormatter.dateStyle = NSDateFormatterMediumStyle;
         self.dueDate = self.todo.dueDate;
         self.dueDateInput.text = [dateFormatter stringFromDate:self.dueDate];
-        datePicker.date = self.dueDate;
+        if (self.dueDate) {
+             datePicker.date = self.dueDate;
+        }
+       
     }
   
 }

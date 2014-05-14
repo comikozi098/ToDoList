@@ -21,8 +21,7 @@
     NSDate *date = dueDate;
     NSArray *todoMail = @[message,date];
     UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:todoMail applicationActivities:nil];
-    
-   
+    [self.navigationController presentViewController:activityVC animated:YES completion:nil];
 
 }
 - (void)updateTodo:(NSString *)todo withDueDate:(NSDate *)dueDate atRow:(NSUInteger)row {
